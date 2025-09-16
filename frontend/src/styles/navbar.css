@@ -1,0 +1,68 @@
+.navbar {
+    width: 100%;
+    background-color: #4b4848; /* dark card */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    box-shadow: 0 0 15px rgba(201, 59, 3, 0.6); /* neon glow */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-logo {
+    color: #ffa500; /* neon orange */
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-links li a {
+    color: #ddd;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .navbar-links li a:hover,
+  .navbar-links li a.active {
+    color: #ffa500;
+    text-shadow: 0 0 8px #ffa500;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .navbar-user {
+    color: #fffaf2;
+    font-weight: bold;
+  }
+  
+  .navbar-logout {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #ff7f50, #ff4500);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .navbar-logout:hover {
+    background: linear-gradient(90deg, #ff4500, #ff7f50);
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.7);
+  }
+  

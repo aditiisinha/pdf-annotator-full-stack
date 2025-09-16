@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import "../styles/login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,12 +24,14 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-      <button type="submit">Login</button>
-      <p>No account? <Link to="/register">Register</Link></p>
+    <div className="login-container">
+    <form onSubmit={handleSubmit} className="login-form">
+      <h2 className="form-title">Login</h2>
+      <input className="form-input" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+      <input type="password" className="form-input" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+      <button type="submit" className="form-button">Login</button>
+      <p className="form-footer">No account? <Link to="/register" className="form-link">Register</Link></p>
     </form>
+    </div>
   );
 }

@@ -1,0 +1,45 @@
+/* Container */
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fff8e7, #f0be7d); /* soft cream background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Card */
+  .dashboard-card {
+    background: #4b4848; /* dark card for contrast */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(201, 59, 3, 0.6); /* neon orange glow */
+    text-align: center;
+    width: 350px;
+  }
+  
+  /* Title */
+  .dashboard-title {
+    color: #ffa500; /* neon orange */
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Button */
+  .dashboard-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #ff7f50, #ff4500);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .dashboard-button:hover {
+    background: linear-gradient(90deg, #ff4500, #ff7f50);
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+  }
+  

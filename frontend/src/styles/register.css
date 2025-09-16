@@ -1,0 +1,89 @@
+/* Background container */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fff8e7, #f0be7d); /* soft cream */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Form box */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #4b4848; /* dark card background */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(201, 59, 3, 0.6); /* orange neon glow */
+    width: 320px;
+    text-align: center;
+    margin: 50px auto; /* center on page */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Title */
+  .form-title {
+    color: #ffa500; /* neon orange */
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Inputs */
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin: 0.6rem 0;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background: #fffaf2;
+    color: #333;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+  
+  .form-input:focus {
+    border: 2px solid #ff8c00;
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.6);
+  }
+  
+  /* Button */
+  .form-button {
+    width: 106%;
+    padding: 10px;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #ff7f50, #ff4500);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .form-button:hover {
+    background: linear-gradient(90deg, #ff4500, #ff7f50);
+    box-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+  }
+  
+  /* Footer */
+  .form-footer {
+    margin-top: 1rem;
+    color: #ddd;
+    font-size: 0.9rem;
+  }
+  
+  .form-link {
+    color: #ffa500;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .form-link:hover {
+    text-decoration: underline;
+  }
+  

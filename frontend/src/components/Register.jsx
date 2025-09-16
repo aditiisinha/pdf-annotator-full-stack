@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import "../styles/register.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -22,12 +23,25 @@ export default function Register() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-      <button type="submit">Register</button>
-      <p>Already have an account? <Link to="/login">Login</Link></p>
-    </form>
+    <div className="register-container">
+      <form onSubmit={handleSubmit} className="register-form">
+        <h2 className="form-title">Register</h2>
+        <input 
+          placeholder="Email" 
+          value={email} 
+          onChange={e => setEmail(e.target.value)} 
+          className="form-input"
+        />
+        <input 
+          type="password" 
+          placeholder="Password" 
+          value={password} 
+          onChange={e => setPassword(e.target.value)} 
+          className="form-input"
+        />
+        <button type="submit" className="form-button">Register</button>
+        <p className="form-footer">Already have an account? <Link to="/login" className="form-link">Login</Link></p>
+      </form>
+    </div>
   );
 }
