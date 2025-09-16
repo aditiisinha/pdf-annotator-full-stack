@@ -6,9 +6,16 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Layout from "./components/Layout";
+import PdfUpload from "./pages/PdfUpload";
 
 function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
+  
+  if (user === null) {
+    // Show loading while checking authentication
+    return <div>Loading...</div>;
+  }
+  
   return user ? children : <Navigate to="/login" />;
 }
 
@@ -19,7 +26,9 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/upload" element={<PrivateRoute><Layout><PdfUpload /></Layout></PrivateRoute>} />
+        <Route path="/" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

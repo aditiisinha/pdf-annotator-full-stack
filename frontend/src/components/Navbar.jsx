@@ -20,7 +20,7 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-right">
-        <span className="navbar-user">{user?.email}</span>
+        <span className="navbar-user">Welcome {user?.email}</span>
         <button className="navbar-logout" onClick={logout}>Logout</button>
       </div>
     </nav>
