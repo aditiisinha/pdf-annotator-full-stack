@@ -1,0 +1,80 @@
+/* Container */
+.library-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  /* Title */
+  .library-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  /* Error message */
+  .library-error {
+    color: #ff6b6b;
+    background-color: #ffe0e0;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+  
+  /* PDF list */
+  .library-list {
+    list-style: none;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .library-item {
+    padding: 12px;
+    margin: 0.6rem 0;
+    background-color: #fffaf2;
+    border-radius: 6px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Metadata */
+  .library-meta {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  
+  /* Buttons */
+  .library-button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .library-button-view {
+    background-color: #ffa500;
+  }
+  
+  .library-button-view:hover {
+    background-color: #e69500;
+  }
+  
+  .library-button-delete {
+    background-color: #ff4d4d;
+  }
+  
+  .library-button-delete:hover {
+    background-color: #e60000;
+  }
+  

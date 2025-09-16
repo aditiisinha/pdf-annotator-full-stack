@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import "../styles/layout.css";
 import "../styles/navbar.css";
 
+
 export default function Layout({ children }) {
   return (
     <>

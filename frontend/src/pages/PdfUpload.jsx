@@ -1,31 +1,36 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/dashboard.css";
+import "../styles/pdfupload.css";
 
 export default function UploadPDF() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [pdfs, setPdfs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch PDFs from backend
   const fetchPdfs = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/pdfs", {
+      const res = await axios.get("http://localhost:5000/api/pdf", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setPdfs(res.data);
       setError("");
+      return res.data;
     } catch (err) {
       console.error(err);
       setError("Failed to load PDFs");
+      return [];
     }
   };
 
   useEffect(() => {
-    fetchPdfs();
+    setPdfs([]); // start empty (only latest uploads will show)
   }, []);
 
+  // Upload PDF
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!file) {
@@ -41,14 +46,19 @@ export default function UploadPDF() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/pdfs/upload", formData, {
+      await axios.post("http://localhost:5000/api/pdf/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
+
+      const updatedList = await fetchPdfs();
+      if (updatedList.length > 0) {
+        setPdfs([updatedList[updatedList.length - 1]]);
+      }
+
       setFile(null);
-      fetchPdfs(); // refresh list
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Upload failed");
@@ -57,106 +67,75 @@ export default function UploadPDF() {
     }
   };
 
-  return (
-      <div className="dashboard-card">
-        <h2 className="dashboard-title">Upload PDF</h2>
-        
-        {error && (
-          <div style={{ 
-            color: '#ff6b6b', 
-            backgroundColor: '#ffe0e0', 
-            padding: '10px', 
-            borderRadius: '6px',
-            marginBottom: '1rem'
-          }}>
-            {error}
-          </div>
-        )}
-        
-        <form onSubmit={handleUpload} style={{ marginBottom: '2rem' }}>
-          <div style={{ marginBottom: '1rem' }}>
-            <input
-              type="file"
-              accept="application/pdf"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-                setError("");
-              }}
-              style={{
-                width: '100%',
-                padding: '8px',
-                border: '2px solid #ddd',
-                borderRadius: '6px',
-                backgroundColor: '#fffaf2',
-                color: '#333'
-              }}
-            />
-            {file && (
-              <p style={{ 
-                marginTop: '0.5rem', 
-                color: '#ffa500',
-                fontSize: '0.9rem' 
-              }}>
-                Selected: {file.name}
-              </p>
-            )}
-          </div>
-          
-          <button 
-            className="dashboard-button" 
-            type="submit" 
-            disabled={loading}
-            style={{
-              opacity: loading ? 0.7 : 1,
-              cursor: loading ? 'not-allowed' : 'pointer'
-            }}
-          >
-            {loading ? 'Uploading...' : 'Upload PDF'}
-          </button>
-        </form>
+  // Delete PDF
+  const handleDelete = async (uuid) => {
+    if (!window.confirm("Are you sure you want to delete this PDF?")) return;
 
-        <h3 className="dashboard-title" style={{ marginBottom: '1rem' }}>My PDFs</h3>
-        
-        {pdfs.length === 0 ? (
-          <p style={{ 
-            color: '#ddd', 
-            textAlign: 'center',
-            fontStyle: 'italic'
-          }}>
-            No PDFs uploaded yet
-          </p>
-        ) : (
-          <ul style={{ 
-            listStyle: 'none', 
-            padding: 0,
-            maxHeight: '300px',
-            overflowY: 'auto'
-          }}>
-            {pdfs.map((pdf) => (
-              <li 
-                key={pdf.uuid} 
-                style={{
-                  padding: '10px',
-                  margin: '0.5rem 0',
-                  backgroundColor: '#fffaf2',
-                  borderRadius: '6px',
-                  color: '#333',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <span>{pdf.filename}</span>
-                <span style={{ 
-                  fontSize: '0.8rem', 
-                  color: '#888' 
-                }}>
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:5000/api/pdf/${uuid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPdfs([]);
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Delete failed");
+    }
+  };
+
+  return (
+    <div className="upload-container">
+      <h2 className="upload-title">Upload PDF</h2>
+
+      {error && <div className="error-box">{error}</div>}
+
+      <form onSubmit={handleUpload} className="upload-form">
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={(e) => {
+            setFile(e.target.files[0]);
+            setError("");
+          }}
+          className="file-input"
+        />
+        {file && <p className="file-selected">Selected: {file.name}</p>}
+
+        <button className="button button-upload" type="submit" disabled={loading}>
+          {loading ? "Uploading..." : "Upload PDF"}
+        </button>
+      </form>
+
+      <h3 className="upload-title">My PDFs</h3>
+
+      {pdfs.length === 0 ? (
+        <p className="no-pdfs">No PDFs uploaded yet</p>
+      ) : (
+        <ul className="pdf-list">
+          {pdfs.map((pdf) => (
+            <li key={pdf.uuid} className="pdf-item">
+              <span>{pdf.filename}</span>
+              <div className="pdf-actions">
+                <span className="pdf-meta">
                   {new Date(pdf.createdAt).toLocaleDateString()}
                 </span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+                <button
+                  onClick={() => navigate(`/view/${pdf.uuid}`)}
+                  className="button button-view"
+                >
+                  View
+                </button>
+                <button
+                  onClick={() => handleDelete(pdf.uuid)}
+                  className="button button-delete"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

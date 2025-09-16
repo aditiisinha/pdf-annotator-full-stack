@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import Pdf from "../models/Pdf.js"; // create this model
 import { verifyToken } from "../middleware/auth.js";
+import Highlight from "../models/Highlight.js";
 
 const router = express.Router();
 
@@ -46,6 +47,36 @@ router.get("/", verifyToken, async (req, res) => {
   try {
     const pdfs = await Pdf.find({ userId: req.user.id });
     res.json(pdfs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Delete PDF
+router.delete("/:uuid", verifyToken, async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    
+    // Find the PDF
+    const pdf = await Pdf.findOne({ uuid, userId: req.user.id });
+    
+    if (!pdf) {
+      return res.status(404).json({ message: "PDF not found" });
+    }
+    
+    // Delete the file from filesystem
+    if (fs.existsSync(pdf.filepath)) {
+      fs.unlinkSync(pdf.filepath);
+    }
+    
+    // Delete from database
+    await Pdf.deleteOne({ uuid, userId: req.user.id });
+    
+    // Also delete associated highlights
+    await Highlight.deleteMany({ pdfUuid: uuid });
+    
+    res.json({ message: "PDF deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
